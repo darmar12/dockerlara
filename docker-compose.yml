@@ -19,3 +19,18 @@ services:
     volumes:
       - ./:/var/www
     container_name: app
+    depends_on:
+      - database
+
+  database:
+    image: mysql:latest
+    restart: always
+    volumes:
+      - ./tmp/db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: dockerlara
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8101:3306"
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    container_name: app_database
